@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator App Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #f5f5f7 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .nav-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        .dollar-icon {
+            width: 80px;
+            height: 80px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+        }
+
+        .dollar-icon span {
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .slider-section {
+            margin-bottom: 25px;
+        }
+
+        .slider-label {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .slider-value.orange {
+            color: #ff9500;
+        }
+
+        .slider-value.green {
+            color: #34c759;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            background: #e5e5ea;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+        }
+
+        .slider-bill {
+            background: linear-gradient(90deg, #af52de 0%, #e5e5ea 0%);
+        }
+
+        .slider-tip {
+            background: linear-gradient(90deg, #34c759 0%, #e5e5ea 0%);
+        }
+
+        .slider-people {
+            background: linear-gradient(90deg, #8e8e93 0%, #e5e5ea 0%);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .btn-calculate {
+            background: #000;
+            color: white;
+        }
+
+        .btn-hide {
+            background: #ff3b30;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .results {
+            background: #f2f2f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-row {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+            padding: 8px 0;
+        }
+
+        .phone-frame {
+            border: 12px solid #1a1a1a;
+            border-radius: 40px;
+            padding: 10px;
+            background: #1a1a1a;
+            max-width: 420px;
+        }
+
+        .screen {
+            background: #f5f5f7;
+            border-radius: 28px;
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="margin-bottom: 20px; color: #666;">📱 SwiftUI App Preview (Test in Browser)</h2>
+
+    <div class="container">
+        <h1>Tip Calculator</h1>
+
+        <div class="dollar-icon">
+            <span>$</span>
+        </div>
+
+        <!-- Bill Amount -->
+        <div class="slider-section">
+            <p class="slider-label">Bill Amount</p>
+            <p class="slider-value orange" id="billDisplay">$50.00</p>
+            <input type="range" id="billSlider" class="slider-bill" min="0" max="500" value="50" step="1">
+        </div>
+
+        <!-- Tip Percentage -->
+        <div class="slider-section">
+            <p class="slider-label">Tip Percentage</p>
+            <p class="slider-value orange" id="tipDisplay">15%</p>
+            <input type="range" id="tipSlider" class="slider-tip" min="0" max="30" value="15" step="1">
+        </div>
+
+        <!-- Number of People -->
+        <div class="slider-section">
+            <p class="slider-label">Number of People</p>
+            <p class="slider-value green" id="peopleDisplay">1</p>
+            <input type="range" id="peopleSlider" class="slider-people" min="1" max="20" value="1" step="1">
+        </div>
+
+        <!-- Button -->
+        <button class="btn btn-calculate" id="toggleBtn" onclick="toggleResults()">Calculate</button>
+
+        <!-- Results -->
+        <div class="results" id="results">
+            <p class="result-row" id="tipAmount">Tip Amount: $7.50</p>
+            <p class="result-row" id="totalAmount">Total Amount: $57.50</p>
+            <p class="result-row" id="perPerson">Amount per Person: $57.50</p>
+        </div>
+    </div>
+
+    <script>
+        let showResults = false;
+
+        const billSlider = document.getElementById('billSlider');
+        const tipSlider = document.getElementById('tipSlider');
+        const peopleSlider = document.getElementById('peopleSlider');
+
+        function updateSliderBackground(slider, color) {
+            const percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+            slider.style.background = `linear-gradient(90deg, ${color} ${percent}%, #e5e5ea ${percent}%)`;
+        }
+
+        function formatCurrency(amount) {
+            return '$' + amount.toFixed(2);
+        }
+
+        function updateDisplay() {
+            const bill = parseFloat(billSlider.value);
+            const tipPercent = parseFloat(tipSlider.value);
+            const people = parseFloat(peopleSlider.value);
+
+            document.getElementById('billDisplay').textContent = formatCurrency(bill);
+            document.getElementById('tipDisplay').textContent = tipPercent + '%';
+            document.getElementById('peopleDisplay').textContent = people;
+
+            // Calculate
+            const tipAmount = bill * (tipPercent / 100);
+            const totalAmount = bill + tipAmount;
+            const perPerson = totalAmount / people;
+
+            document.getElementById('tipAmount').textContent = 'Tip Amount: ' + formatCurrency(tipAmount);
+            document.getElementById('totalAmount').textContent = 'Total Amount: ' + formatCurrency(totalAmount);
+            document.getElementById('perPerson').textContent = 'Amount per Person: ' + formatCurrency(perPerson);
+
+            // Update slider backgrounds
+            updateSliderBackground(billSlider, '#af52de');
+            updateSliderBackground(tipSlider, '#34c759');
+            updateSliderBackground(peopleSlider, '#8e8e93');
+        }
+
+        function toggleResults() {
+            showResults = !showResults;
+            const btn = document.getElementById('toggleBtn');
+            const results = document.getElementById('results');
+
+            if (showResults) {
+                btn.textContent = 'Hide Results';
+                btn.className = 'btn btn-hide';
+                results.classList.add('show');
+            } else {
+                btn.textContent = 'Calculate';
+                btn.className = 'btn btn-calculate';
+                results.classList.remove('show');
+            }
+        }
+
+        // Event listeners
+        billSlider.addEventListener('input', updateDisplay);
+        tipSlider.addEventListener('input', updateDisplay);
+        peopleSlider.addEventListener('input', updateDisplay);
+
+        // Initialize
+        updateDisplay();
+    </script>
+</body>
+
+</html>
