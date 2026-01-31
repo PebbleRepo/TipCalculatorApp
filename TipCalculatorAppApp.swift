@@ -1,8 +1,9 @@
 //
 //  TipCalculatorAppApp.swift
-//  TipCalculatorApp
+//  
 //
-//  Created for Assignment 1
+//  Name: Dylan Rock
+//  Student ID: A20474094
 //
 
 import SwiftUI

@@ -1,20 +1,21 @@
 //
 //  ContentView.swift
-//  TipCalculatorApp
+//  
 //
-//  Created for Assignment 1
+//  Name: Dylan Rock
+//  Student ID: A20474094
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    // MARK: - State Variables
+    //State Variables
     @State private var billAmount: Double = 50.0
     @State private var tipPercentage: Double = 15.0
     @State private var numberOfPeople: Double = 1.0
     @State private var showResults: Bool = false
     
-    // MARK: - Computed Properties
+    //Computed Properties
     var tipAmount: Double {
         return billAmount * (tipPercentage / 100)
     }
@@ -27,7 +28,7 @@ struct ContentView: View {
         return totalAmount / numberOfPeople
     }
     
-    // MARK: - Body
+    //Body
     var body: some View {
         VStack(spacing: 20) {
             // Title
